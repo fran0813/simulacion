@@ -16,4 +16,4 @@
 // });
 
 Route::get('/', 'MainController@index')->name('/');
-Route::get('simulacion', 'MainController@simulacion')->name('simulacion');
+// Route::get('simulacion', 'MainController@simulacion')->name('simulacion');

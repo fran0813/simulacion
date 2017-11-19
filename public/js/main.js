@@ -1,7 +1,5 @@
 $(document).ready(function(){
-
-	simulacion();
-
+	// simulacion();
 });
 
 (function() {
@@ -52,27 +50,23 @@ $(document).ready(function(){
   }
 })();
 
+// Random
 function random() {	
 	arrayNumAle = [];
-
 	numAle = Math.round10(Math.random(),-4);
 	arrayNumAle.push(numAle);
 }
 
 // Tiempo 0
 function tiempo0() {
-
 	var numAleFila;
 	var numAleServ;
-
 	var numMax = 3;    	
 
 	maxFila = 4;
 	minFila = 0;
-
 	maxServ = 1;
 	minServ = 0;
-
 
 	for (var i = 0; i < numMax; i++) {
 		numAleFila = Math.floor(Math.random() * (maxFila - minFila)) + minFila;
@@ -94,8 +88,9 @@ var numAle;
 var tiempoLlegada;
 var tipoVehiculo;
 
-var arrayFila = [];
 var arrayServ = [];
+var arrayFila = [];
+var arrayServActual = [];
 var arrayNumAle = [];
 
 var tempRapFila;
@@ -106,12 +101,14 @@ var tempRapServ;
 var tempGral1Serv;
 var tempGral2Serv;
 
+var suceso;
+
 var html = "";
 
 function simulacion(){
 
 		tiempoInicial = 0;
-		tiempoFinal = 10;
+		// tiempoFinal = 60;
 
 		tiempo0();
 
@@ -161,13 +158,13 @@ function simulacion(){
 
         // Tiempo y suceso
         html = html + "<td>0,000</td>";
-        html = html + "<td><center>-</center></td>";
+        html = html + "<td>-</td>";
 
         // Estado/Hasta el tiempo
-
         if(arrayServ[0] == 1){
         	random();
         	serv = Math.round10((-(1/10)*60*(Math.log(1-numAle))), -4);
+        	arrayServActual[0] = serv;
         	html = html + "<td>";
 	        html = html + serv;
 	        html = html + "</td>";
@@ -179,7 +176,14 @@ function simulacion(){
 
         if(arrayServ[1] == 1){
         	random();
-        	serv = Math.round10((-(1/10)*60*(Math.log(1-numAle))), -4);
+        	if(numAle >= 0 && numAle < 0.6){
+        		serv = Math.round10(((3+5)*(numAle/0,6)), -4);
+        	}else if(numAle >= 0,6 && numAle < 0.9){
+        		serv = Math.round10(((8+5)*((numAle-0,6)/0,3)), -4);
+        	}else{
+        		serv = Math.round10(((13+5)*((numAle-0,9)/0,1)), -4);
+        	}
+        	arrayServActual[1] = serv;
         	html = html + "<td>";
 	        html = html + serv;
 	        html = html + "</td>";
@@ -191,7 +195,14 @@ function simulacion(){
 
         if(arrayServ[2] == 1){
         	random();
-        	serv = Math.round10((-(1/10)*60*(Math.log(1-numAle))), -4);
+        	if(numAle >= 0 && numAle < 0.6){
+        		serv = Math.round10(((3+5)*(numAle/0,6)), -4);
+        	}else if(numAle >= 0,6 && numAle < 0.9){
+        		serv = Math.round10(((8+5)*((numAle-0,6)/0,3)), -4);
+        	}else{
+        		serv = Math.round10(((13+5)*((numAle-0,9)/0,1)), -4);
+        	}
+        	arrayServActual[2] = serv;
         	html = html + "<td>";
 	        html = html + serv;
 	        html = html + "</td>";
@@ -214,28 +225,30 @@ function simulacion(){
         html = html + arrayFila[2];
         html = html + "</td>";
 
+        random();
         llegada();
 
         html = html + "<td>";
         html = html + tiempoLlegada;
         html = html + "</td>";
 
+        random();
         tipo();
 
         html = html + "<td>";
         html = html + tipoVehiculo;
         html = html + "</td>";
 
-        tiempoInicial = tiempoInicial + tiempoLlegada;
+        html = html + "</tr>";
 
-        html = html + tiempoInicial;
+        tiempoInicial = Math.round10(tiempoInicial + tiempoLlegada,-4);
 
-        // while(tiempoInicial < tiempoFinal){
-        	// tiempoInicial = tiempoInicial +1;
+        while(tiempoInicial < tiempoFinal){
+        	tiempoInicial = Math.round10(tiempoInicial + tiempoLlegada,-4);
         	simulacion2();
-        // }
+        }
 
-        
+        $('#simulacion').html(html);        
 }
 
 function llegada(){
@@ -253,6 +266,9 @@ function tipo() {
 }
 
 function simulacion2(){
+
+	html = html + "<tr class='border-dotted'>";
+
 	if(tipoVehiculo == "Rápida"){
 
 		if(arrayFila[0] == 0){
@@ -260,9 +276,357 @@ function simulacion2(){
 		}else if(arrayFila[0] == arrayFila[1] && arrayFila[1] == arrayFila[2] && arrayFila[2] == arrayFila[0]){
 			arrayFila[0] = arrayFila[0] + 1;
 		}else if(arrayFila[0] < arrayFila[1] && arrayFila[0] == arrayFila[2]){
+			arrayFila[0] = arrayFila[0] + 1;
+		}else if(arrayFila[0] == arrayFila[1] && arrayFila[0] < arrayFila[2]){
+			arrayFila[0] = arrayFila[0] + 1;
+		}else if(arrayFila[0] < arrayFila[1] && arrayFila[0] < arrayFila[2]){
+			arrayFila[0] = arrayFila[0] + 1;
+		}else if(arrayFila[0] > arrayFila[1] && arrayFila[1] < arrayFila[2]){
+			arrayFila[1] = arrayFila[1] + 1;
+		}else if(arrayFila[0] > arrayFila[1] && arrayFila[1] == arrayFila[2]){
+			arrayFila[1] = arrayFila[1] + 1;
+		}else if(arrayFila[0] > arrayFila[1] && arrayFila[1] > arrayFila[2]){
+			arrayFila[2] = arrayFila[2] + 1;
+		}
+	}else if(tipoVehiculo == "General"){
 
-		}else if(arrayFila[0])
+		if(arrayFila[1] == 0){
+			arrayFila[1] = arrayFila[1] + 1;
+		}else if(arrayFila[1] == arrayFila[2]){
+			arrayFila[1] = arrayFila[1] + 1;
+		}else if(arrayFila[1] < arrayFila[2]){
+			arrayFila[1] = arrayFila[1] + 1;
+		}else if(arrayFila[2] == 0){
+			arrayFila[2] = arrayFila[2] + 1;
+		}else if(arrayFila[2] < arrayFila[1]){
+			arrayFila[2] = arrayFila[2] + 1;
+		}
 	}
 
-	$('#simulacion').html(arrayFila[0]);
+	if(tiempoLlegada > arrayServActual[0] && arrayFila[0] > 0){
+	
+		html = html + "<td>";
+        html = html + Math.round10(arrayServActual[0],-4);
+        html = html + "</td>";
+
+		suceso = "Salida";
+
+		html = html + "<td>";
+        html = html + suceso;
+        html = html + "</td>";
+
+        random();
+		arrayFila[0] = arrayFila[0] - 1;
+		serv = Math.round10((-(1/10)*60*(Math.log(1-numAle))), -4);
+		arrayServActual[0] = Math.round10(arrayServActual[0] + serv,-4);
+
+		html = html + "<td>";
+        html = html + Math.round10(arrayServActual[0],-4);
+        html = html + "</td>";
+
+        if(arrayServActual[1] == null){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + Math.round10(arrayServActual[1],-4);
+	        html = html + "</td>";
+        }
+
+        if(arrayServActual[2] == null){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + Math.round10(arrayServActual[2],-4);
+	        html = html + "</td>";
+        }
+
+        html = html + "<td>";
+        html = html + arrayFila[0];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[1];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[2];
+        html = html + "</td>";
+
+        random();
+        llegada();
+
+        html = html + "<td>";
+        html = html + tiempoLlegada;
+        html = html + "</td>";
+
+		random();
+        tipo();
+
+        html = html + "<td>";
+        html = html + tipoVehiculo;
+        html = html + "</td>";
+	}else if(tiempoLlegada > arrayServActual[1] && arrayFila[1] > 0){
+
+		html = html + "<td>";
+        html = html + Math.round10(arrayServActual[1],-4);
+        html = html + "</td>";
+
+		suceso = "Salida";
+
+		html = html + "<td>";
+        html = html + suceso;
+        html = html + "</td>";
+
+		random();
+		arrayFila[1] = arrayFila[1] - 1;
+		if(numAle >= 0 && numAle < 0.6){
+    		serv = Math.round10(((3+5)*(numAle/0,6)), -4);
+    	}else if(numAle >= 0,6 && numAle < 0.9){
+    		serv = Math.round10(((8+5)*((numAle-0,6)/0,3)), -4);
+    	}else{
+    		serv = Math.round10(((13+5)*((numAle-0,9)/0,1)), -4);
+    	}
+		arrayServActual[1] = Math.round10(arrayServActual[1] + serv, -4);
+
+		if(arrayServActual[0] == null){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + Math.round10(arrayServActual[0],-4);
+	        html = html + "</td>";
+        }
+
+        html = html + "<td>";
+        html = html + Math.round10(arrayServActual[1],-4);
+        html = html + "</td>";
+
+        if(arrayServActual[2] == null){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + Math.round10(arrayServActual[2],-4);
+	        html = html + "</td>";
+        }
+
+        html = html + "<td>";
+        html = html + arrayFila[0];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[1];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[2];
+        html = html + "</td>";
+
+        random();
+        llegada();
+
+        html = html + "<td>";
+        html = html + tiempoLlegada;
+        html = html + "</td>";
+
+		random();
+        tipo();
+
+        html = html + "<td>";
+        html = html + tipoVehiculo;
+        html = html + "</td>";
+	}else if(tiempoLlegada > arrayServActual[2] && arrayFila[2] > 0){
+
+		html = html + "<td>";
+        html = html + Math.round10(arrayServActual[2],-4);
+        html = html + "</td>";
+
+		suceso = "Salida";
+
+		html = html + "<td>";
+        html = html + suceso;
+        html = html + "</td>";
+
+		random();
+		arrayFila[2] = arrayFila[2] - 1;
+		if(numAle >= 0 && numAle < 0.6){
+    		serv = Math.round10(((3+5)*(numAle/0,6)), -4);
+    	}else if(numAle >= 0,6 && numAle < 0.9){
+    		serv = Math.round10(((8+5)*((numAle-0,6)/0,3)), -4);
+    	}else{
+    		serv = Math.round10(((13+5)*((numAle-0,9)/0,1)), -4);
+    	}
+		arrayServActual[2] = Math.round10(arrayServActual[2] + serv,-4);
+		if(arrayServActual[0] == null){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + Math.round10(arrayServActual[0],-4);
+	        html = html + "</td>";
+        }
+
+        if(arrayServActual[1] == null){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + Math.round10(arrayServActual[1],-4);
+	        html = html + "</td>";
+        }
+
+        html = html + "<td>";
+        html = html + Math.round10(arrayServActual[2],-4);
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[0];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[1];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[2];
+        html = html + "</td>";
+
+        random();
+        llegada();
+
+        html = html + "<td>";
+        html = html + tiempoLlegada;
+        html = html + "</td>";
+
+		random();
+        tipo();
+
+        html = html + "<td>";
+        html = html + tipoVehiculo;
+        html = html + "</td>";
+	}else{
+
+		html = html + "<td>";
+        html = html + Math.round10(tiempoInicial,-4);
+        html = html + "</td>";
+
+		suceso = "Llegada";
+
+		html = html + "<td>";
+        html = html + suceso;
+        html = html + "</td>";
+
+        if(arrayFila[0] > 0 && arrayServActual[0] == null){
+        	random();
+			arrayFila[0] = arrayFila[0] - 1;
+			serv = Math.round10((-(1/10)*60*(Math.log(1-numAle))), -4);
+			arrayServActual[0] = serv;
+
+        	html = html + "<td>";
+	        html = html + Math.round10(arrayServActual[0],-4);
+	        html = html + "</td>";
+        }else if(arrayFila[0] == 0 && arrayServActual[0] == null){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + Math.round10(arrayServActual[0],-4);
+	        html = html + "</td>";
+        }
+
+		
+        if(arrayFila[1] > 0 && arrayServActual[1] == null){
+        	random();
+			arrayFila[1] = arrayFila[1] - 1;
+			if(numAle >= 0 && numAle < 0.6){
+	    		serv = Math.round10(((3+5)*(numAle/0.6)),-4);
+	    	}else if(numAle >= 0.6 && numAle < 0.9){
+	    		serv = Math.round10(((8+5)*((numAle-0.6)/0.3)),-4);
+	    	}else{
+	    		serv = Math.round10(((13+5)*((numAle-0.9)/0.1)),-4);
+	    	}
+			arrayServActual[1] = serv;
+        	html = html + "<td>";
+	        html = html + Math.round10(arrayServActual[1],-4);
+	        html = html + "</td>";
+        }else if(arrayFila[1] == 0 && arrayServActual[1] == null){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + arrayServActual[1];
+	        html = html + "</td>";
+        }
+
+        if(arrayFila[2] > 0 && arrayServActual[2] == null){
+        	random();
+			arrayFila[2] = arrayFila[2] - 1;
+			if(numAle >= 0 && numAle < 0.6){
+	    		serv = Math.round10(((3+5)*(numAle/0.6)),-4);
+	    	}else if(numAle >= 0.6 && numAle < 0.9){
+	    		serv = Math.round10(((8+5)*((numAle-0.6)/0.3)),-4);
+	    	}else{
+	    		serv = Math.round10(((13+5)*((numAle-0.9)/0.1)),-4);
+	    	}
+			arrayServActual[2] = serv;
+        	html = html + "<td>";
+	        html = html + Math.round10(arrayServActual[2],-4);
+	        html = html + "</td>";
+        }else if(arrayFila[2] == 0 && arrayServActual[2] == null){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + Math.round10(arrayServActual[2],-4);
+	        html = html + "</td>";
+        }
+
+        html = html + "<td>";
+        html = html + arrayFila[0];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[1];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[2];
+        html = html + "</td>";
+
+        random();
+        llegada();
+
+        html = html + "<td>";
+        html = html + tiempoLlegada;
+        html = html + "</td>";
+
+		random();
+        tipo();
+
+        html = html + "<td>";
+        html = html + tipoVehiculo;
+        html = html + "</td>";
+
+	}
+
+	html = html + "</tr>";
+
 }
+
+$("#formTime").on("submit", function(){
+	tiempoFinal = $("#tiempo").val();
+	html="";
+	simulacion();
+	return false;
+});
