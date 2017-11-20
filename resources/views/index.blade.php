@@ -14,6 +14,8 @@
 	<div id="titulo2"></div>
 	<div id="prueba"></div>
 
+	<div id="a"></div>
+
 	<div>
 		<p id="num"></p>
 		<p id="est"></p>

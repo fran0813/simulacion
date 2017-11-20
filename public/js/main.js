@@ -92,6 +92,13 @@ var html2;
 
 var decimales = 4;
 var nivelDeSignificancia;
+var salida0;
+var salida1;
+var salida2;
+
+var c0;
+var c1;
+var c2;
 
 function simulacion(){
 
@@ -99,6 +106,7 @@ function simulacion(){
 
 	tiempoInicial = 0;
 	// tiempoFinal = 60;
+	// nivelDeSignificancia = 0.01;
 
 	tiempo0();
 
@@ -218,7 +226,7 @@ function simulacion(){
     llegada();
 
     html = html + "<td>";
-    html = html + tiempoLlegada.toFixed(decimales);
+    html = html + tiempoInicial.toFixed(decimales);
     html = html + "</td>";
 
     tipo();
@@ -229,11 +237,7 @@ function simulacion(){
 
     html = html + "</tr>";
 
-    tiempoInicial = Math.round10(tiempoInicial + tiempoLlegada,-4);
-
     while(tiempoInicial < tiempoFinal){
-
-    	tiempoInicial = Math.round10(tiempoInicial + tiempoLlegada,-4);
 
     	if(tiempoInicial < tiempoFinal){
     		simulacion2();
@@ -251,6 +255,7 @@ function simulacion(){
 function llegada(){
 	random();
 	tiempoLlegada = Math.round10((-(1/20)*60*(Math.log(1-numAle))), -4);
+	tiempoInicial = Math.round10(tiempoInicial + tiempoLlegada,-4);
 }
 
 function tipo() {
@@ -300,8 +305,10 @@ function simulacion2(){
 		}
 	}
 
-	if(tiempoLlegada > arrayServActual[0] && arrayFila[0] > 0){
+	if(tiempoInicial > arrayServActual[0] && arrayFila[0] > 0){
 	
+		c0 = "verdad";
+
 		html = html + "<td>";
         html = html + arrayServActual[0].toFixed(decimales);
         html = html + "</td>";
@@ -314,14 +321,14 @@ function simulacion2(){
 
         random();
 		arrayFila[0] = arrayFila[0] - 1;
-		serv = Math.round10((-(1/10)*60*(Math.log(1-numAle))), -4);
+		serv = Math.round10((-(1/10)*60*(Math.log(1-numAle))),-4);
 		arrayServActual[0] = Math.round10(arrayServActual[0] + serv,-4);
 
 		html = html + "<td>";
         html = html + arrayServActual[0].toFixed(decimales);
         html = html + "</td>";
 
-        if(arrayServActual[1] == null){
+        if(arrayServActual[1] == null || c1 == "falso"){
         	html = html + "<td>";
 	        html = html + "-";
 	        html = html + "</td>";
@@ -331,7 +338,7 @@ function simulacion2(){
 	        html = html + "</td>";
         }
 
-        if(arrayServActual[2] == null){
+        if(arrayServActual[2] == null || c2 == "falso"){
         	html = html + "<td>";
 	        html = html + "-";
 	        html = html + "</td>";
@@ -353,18 +360,16 @@ function simulacion2(){
         html = html + arrayFila[2];
         html = html + "</td>";
 
-        llegada();
-
         html = html + "<td>";
-        html = html + tiempoLlegada.toFixed(decimales);
+        html = html + tiempoInicial.toFixed(decimales);
         html = html + "</td>";
-
-        tipo();
 
         html = html + "<td>";
         html = html + tipoVehiculo;
         html = html + "</td>";
-	}else if(tiempoLlegada > arrayServActual[1] && arrayFila[1] > 0){
+	}else if(tiempoInicial > arrayServActual[1] && arrayFila[1] > 0){
+
+		c1 = "verdad";
 
 		html = html + "<td>";
         html = html + arrayServActual[1].toFixed(decimales);
@@ -379,15 +384,15 @@ function simulacion2(){
 		random();
 		arrayFila[1] = arrayFila[1] - 1;
 		if(numAle >= 0 && numAle < 0.6){
-    		serv = Math.round10(((3+5)*(numAle/0,6)), -4);
-    	}else if(numAle >= 0,6 && numAle < 0.9){
-    		serv = Math.round10(((8+5)*((numAle-0,6)/0,3)), -4);
+    		serv = Math.round10(((3+5)*(numAle/0.6)), -4);
+    	}else if(numAle >= 0.6 && numAle < 0.9){
+    		serv = Math.round10(((8+5)*((numAle-0.6)/0.3)), -4);
     	}else{
-    		serv = Math.round10(((13+5)*((numAle-0,9)/0,1)), -4);
+    		serv = Math.round10(((13+5)*((numAle-0.9)/0.1)), -4);
     	}
 		arrayServActual[1] = Math.round10(arrayServActual[1] + serv, -4);
 
-		if(arrayServActual[0] == null){
+		if(arrayServActual[0] == null || c0 == "falso"){
         	html = html + "<td>";
 	        html = html + "-";
 	        html = html + "</td>";
@@ -401,7 +406,7 @@ function simulacion2(){
         html = html + arrayServActual[1].toFixed(decimales);
         html = html + "</td>";
 
-        if(arrayServActual[2] == null){
+        if(arrayServActual[2] == null || c2 == "falso"){
         	html = html + "<td>";
 	        html = html + "-";
 	        html = html + "</td>";
@@ -423,18 +428,18 @@ function simulacion2(){
         html = html + arrayFila[2];
         html = html + "</td>";
 
-        llegada();
-
         html = html + "<td>";
-        html = html + tiempoLlegada.toFixed(decimales);
+        html = html + tiempoInicial.toFixed(decimales);
         html = html + "</td>";
-
-        tipo();
 
         html = html + "<td>";
         html = html + tipoVehiculo;
         html = html + "</td>";
-	}else if(tiempoLlegada > arrayServActual[2] && arrayFila[2] > 0){
+
+        // General 2, servicio y fila > 0
+	}else if(tiempoInicial > arrayServActual[2] && arrayFila[2] > 0){
+
+		c2 = "verdad";
 
 		html = html + "<td>";
         html = html + arrayServActual[2].toFixed(decimales);
@@ -449,14 +454,14 @@ function simulacion2(){
 		random();
 		arrayFila[2] = arrayFila[2] - 1;
 		if(numAle >= 0 && numAle < 0.6){
-    		serv = Math.round10(((3+5)*(numAle/0,6)), -4);
-    	}else if(numAle >= 0,6 && numAle < 0.9){
-    		serv = Math.round10(((8+5)*((numAle-0,6)/0,3)), -4);
+    		serv = Math.round10(((3+5)*(numAle/0.6)), -4);
+    	}else if(numAle >= 0.6 && numAle < 0.9){
+    		serv = Math.round10(((8+5)*((numAle-0.6)/0.3)), -4);
     	}else{
-    		serv = Math.round10(((13+5)*((numAle-0,9)/0,1)), -4);
+    		serv = Math.round10(((13+5)*((numAle-0.9)/0.1)), -4);
     	}
 		arrayServActual[2] = Math.round10(arrayServActual[2] + serv,-4);
-		if(arrayServActual[0] == null){
+		if(arrayServActual[0] == null || c0 == "falso"){
         	html = html + "<td>";
 	        html = html + "-";
 	        html = html + "</td>";
@@ -466,7 +471,7 @@ function simulacion2(){
 	        html = html + "</td>";
         }
 
-        if(arrayServActual[1] == null){
+        if(arrayServActual[1] == null || c1 == "falso"){
         	html = html + "<td>";
 	        html = html + "-";
 	        html = html + "</td>";
@@ -492,17 +497,211 @@ function simulacion2(){
         html = html + arrayFila[2];
         html = html + "</td>";
 
-        llegada();
-
         html = html + "<td>";
-        html = html + tiempoLlegada.toFixed(decimales);
+        html = html + tiempoInicial.toFixed(decimales);
         html = html + "</td>";
-
-        tipo();
 
         html = html + "<td>";
         html = html + tipoVehiculo;
         html = html + "</td>";
+
+        // Rapido, servicio y fila = 0
+	}else if(tiempoInicial > arrayServActual[0] && arrayFila[0] == 0 && salida0 != arrayServActual[0]){
+
+		c0 = "falso";
+		if(arrayServActual[0] == null){
+        	html = html + "<td>";
+	        html = html + salida0.toFixed(decimales);
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + arrayServActual[0].toFixed(decimales);
+	        html = html + "</td>";
+        }
+
+		suceso = "Salida";
+
+		html = html + "<td>";
+        html = html + suceso;
+        html = html + "</td>";
+
+        salida0 = arrayServActual[0];
+
+    	html = html + "<td>";
+        html = html + "-";
+        html = html + "</td>";
+
+        if(arrayServActual[1] == null || c1 == "falso"){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + arrayServActual[1].toFixed(decimales);
+	        html = html + "</td>";
+        }
+
+        if(arrayServActual[2] == null || c2 == "falso"){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + arrayServActual[2].toFixed(decimales);
+	        html = html + "</td>";
+        }
+
+        html = html + "<td>";
+        html = html + arrayFila[0];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[1];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[2];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + tiempoInicial.toFixed(decimales);
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + tipoVehiculo;
+        html = html + "</td>";
+
+        // General 1, servicio y fila = 0
+	}else if(tiempoInicial > arrayServActual[1] && arrayFila[1] == 0 && salida1 != arrayServActual[1]){
+
+		c1 = "falso";
+		if(arrayServActual[1] == null){
+        	html = html + "<td>";
+	        html = html + salida1.toFixed(decimales);
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + arrayServActual[1].toFixed(decimales);
+	        html = html + "</td>";
+        }
+
+		suceso = "Salida";
+
+		html = html + "<td>";
+        html = html + suceso;
+        html = html + "</td>";
+
+		if(arrayServActual[0] == null || c0 == "falso"){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + arrayServActual[0].toFixed(decimales);
+	        html = html + "</td>";
+        }
+
+        salida1 = arrayServActual[1];
+
+        html = html + "<td>";
+        html = html + "-";
+        html = html + "</td>";
+
+        if(arrayServActual[2] == null || c2 == "falso"){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + arrayServActual[2].toFixed(decimales);
+	        html = html + "</td>";
+        }
+
+        html = html + "<td>";
+        html = html + arrayFila[0];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[1];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[2];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + tiempoInicial.toFixed(decimales);
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + tipoVehiculo;
+        html = html + "</td>";
+	}else if(tiempoInicial > arrayServActual[2] && arrayFila[2] == 0 && salida2 != arrayServActual[2]){
+
+		c2 = "falso";
+		if(arrayServActual[2] == null){
+        	html = html + "<td>";
+	        html = html + salida2.toFixed(decimales);
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + arrayServActual[2].toFixed(decimales);
+	        html = html + "</td>";
+        }
+
+		suceso = "Salida";
+
+		html = html + "<td>";
+        html = html + suceso;
+        html = html + "</td>";
+
+		if(arrayServActual[0] == null){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + arrayServActual[0].toFixed(decimales);
+	        html = html + "</td>";
+        }
+
+        if(arrayServActual[1] == null){
+        	html = html + "<td>";
+	        html = html + "-";
+	        html = html + "</td>";
+        }else{
+        	html = html + "<td>";
+	        html = html + arrayServActual[1].toFixed(decimales);
+	        html = html + "</td>";
+        }
+
+        salida2 = arrayServActual[2];
+
+        html = html + "<td>";
+        html = html + "-";
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[0];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[1];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + arrayFila[2];
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + tiempoInicial.toFixed(decimales);
+        html = html + "</td>";
+
+        html = html + "<td>";
+        html = html + tipoVehiculo;
+        html = html + "</td>";
+
+        // Rapido, servicio y fila = 0
 	}else{
 
 		html = html + "<td>";
@@ -524,7 +723,7 @@ function simulacion2(){
         	html = html + "<td>";
 	        html = html + arrayServActual[0].toFixed(decimales);
 	        html = html + "</td>";
-        }else if(arrayFila[0] == 0 && arrayServActual[0] == null){
+        }else if((arrayFila[0] == 0 && arrayServActual[0] == null) || c0 == "falso"){
         	html = html + "<td>";
 	        html = html + "-";
 	        html = html + "</td>";
@@ -549,7 +748,7 @@ function simulacion2(){
         	html = html + "<td>";
 	        html = html + arrayServActual[1].toFixed(decimales);
 	        html = html + "</td>";
-        }else if(arrayFila[1] == 0 && arrayServActual[1] == null){
+        }else if((arrayFila[1] == 0 && arrayServActual[1] == null) || c1 =="falso"){
         	html = html + "<td>";
 	        html = html + "-";
 	        html = html + "</td>";
@@ -573,7 +772,7 @@ function simulacion2(){
         	html = html + "<td>";
 	        html = html + arrayServActual[2].toFixed(decimales);
 	        html = html + "</td>";
-        }else if(arrayFila[2] == 0 && arrayServActual[2] == null){
+        }else if((arrayFila[2] == 0 && arrayServActual[2] == null) || c2 == "falso"){
         	html = html + "<td>";
 	        html = html + "-";
 	        html = html + "</td>";
@@ -598,7 +797,7 @@ function simulacion2(){
         llegada();
 
         html = html + "<td>";
-        html = html + tiempoLlegada.toFixed(decimales);
+        html = html + tiempoInicial.toFixed(decimales);
         html = html + "</td>";
 
         tipo();
@@ -775,9 +974,9 @@ function ks(){
 	var n = arrayNumAle.length;
 	var alfa = nivelDeSignificancia;
 
-	if (n <= 35){
+	if(n <= 35){
 		ks = TABLA_KS[alfa][n-1];
-	} else {
+	}else{
 		ks = TABLA_KS[alfa][35]/Math.sqrt(n);
 	}
 
