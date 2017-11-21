@@ -1,0 +1,37 @@
+header {
+  padding: 27px 0 20px;
+}
+
+@media (min-width: 992px) {
+  header {
+    padding: 30px 0 20px;
+  }
+}
+
+section {
+  padding: 150px 0;
+}
+
+.bg-tablac {
+    color: #fff;
+    background-color: #323538;
+}
+
+.h1, h1 {
+    font-size: 40px;
+}
+
+.bg-header{
+	color: #fff;
+	text-shadow: -3px 0 4px rgba(5, 5, 67, 0.62);
+	background: url(../img/2.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100%;
+}
+
+.formp{
+	font-size: 15px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}

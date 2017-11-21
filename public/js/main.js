@@ -110,41 +110,25 @@ function simulacion(){
 
 	tiempo0();
 
-    html = "<table class='table table-bordered'>";
-    html = html + "<thead>";
+    html = "<table class='table table-bordered table-hover'>";
+    html = html + "<thead class='bg-tablac'>";
 
     html = html + "<tr>";  
-
-	// Encabezado 
-    html = html + "<tr>";                	
-    html = html + "<th></th>";
-    html = html + "<th></th>";
-    html = html + "<th>Estado</th>";
-    html = html + "<th>Hasta</th>";
-    html = html + "<th>el tiempo</th>";
-
-    html = html + "<th>Número</th>";
-    html = html + "<th>en la</th>";
-    html = html + "<th>fila</th>";
-
-    html = html + "<th>Siguiente</th>";
-    html = html + "<th>llegada</th>";
-    html = html + "</tr>";
 
     // Encabezado 
     html = html + "<th>Tiempo</th>";
     html = html + "<th>Suceso</th>";
 
-    html = html + "<th>Rap.</th>";
-    html = html + "<th>Gral1.</th>";
-    html = html + "<th>Gral2.</th>";
+    html = html + "<th>Servicio Rap.</th>";
+    html = html + "<th>Servicio Gral1.</th>";
+    html = html + "<th>Servicio Gral2.</th>";
 
-    html = html + "<th>Rap.</th>";
-    html = html + "<th>Gral1.</th>";
-    html = html + "<th>Gral2.</th>";
+    html = html + "<th>Fila Rap.</th>";
+    html = html + "<th>Fila Gral1.</th>";
+    html = html + "<th>Fila Gral2.</th>";
 
-    html = html + "<th>Tiempo.</th>";
-    html = html + "<th>Tipo.</th>";
+    html = html + "<th>Tiempo de Llegada.</th>";
+    html = html + "<th>Tipo de Vehículo.</th>";
     html = html + "</tr>";
 
     html = html + "</thead>";
@@ -855,8 +839,8 @@ function prueba(){
 
 	shellSort();
 
-	html2 = "<table class='table table-bordered'>";
-    html2 = html2 + "<thead>";
+	html2 = "<table class='table table-bordered table-hover'>";
+    html2 = html2 + "<thead class='bg-tablac'>";
 
 	// Encabezado 
     html2 = html2 + "<tr>";                	
@@ -905,8 +889,8 @@ function prueba(){
 	max = Math.round10(Math.max.apply(null,arrayDesAbs),-4);
 
 	$('#prueba').html(html2);
-	$('#num').html("Total de numeros aleatorios " + arrayNumAle.length);
-	$('#est').html("Estadistico "+ max);
+	$('#num').html("Total de numeros aleatorios: " + arrayNumAle.length);
+	$('#est').html("Estadistico: "+ max);
 	ks();
 	return false;
 }
@@ -983,7 +967,7 @@ function ks(){
 	ks = Math.round10(ks,-4);
 	ks = ks.toFixed(decimales);
 
-	$('#his').html("Historico " + ks);
+	$('#his').html("Historico: " + ks);
 
 	if(max < ks){
 		$('#resultado').html("No hay evidencia suficiente para rechazar la hipótesis nula, por lo tanto los números provienen de una distribución uniforme.");
