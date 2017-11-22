@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	// simulacion();
+    // tiempo0();
 });
 
 (function() {
@@ -46,28 +47,105 @@ $(document).ready(function(){
 function random() {	
 	numAle = Math.round10(Math.random(),-4);
 	arrayNumAle.push(numAle.toFixed(decimales));
+    arrayNumAle2.push(numAle.toFixed(decimales));
 }
 
 // Tiempo 0
 function tiempo0() {
+
+    $('#titulo3').html("<h1>Tiempo 0</h1>");
+
 	var numAleFila;
 	var numAleServ;
 	var numMax = 3;
 
-	maxFila = 4;
-	minFila = 0;
-	maxServ = 1;
-	minServ = 0;
+	maxFilaRap = 4;
+	minFilaRap = 0;
+    maxFilaGral1 = 3;
+    minFilaGral1 = 0;
+    maxFilaGral2 = 3;
+    minFilaGral2 = 0;
+
+	maxServRap = 1;
+	minServRap = 0;
+    maxServGral1 = 1;
+    minServGral1 = 0;
+    maxServGral2 = 1;
+    minServGral2 = 0;
+
+    html3 = "<table class='table table-bordered table-hover'>";
+    html3 = html3 + "<thead class='bg-tablac'>";
+
+    html3 = html3 + "<tr>";  
+
+    // Encabezado 
+    html3 = html3 + "<th></th>";
+    html3 = html3 + "<th>Rap</th>";
+    html3 = html3 + "<th>Gral1</th>";
+    html3 = html3 + "<th>Gral2</th>";
+
+    html3 = html3 + "</tr>";
+
+    html3 = html3 + "</thead>";
+    html3 = html3 + "</tbody>";
+
+    html3 = html3 + "<tr class='border-dotted'>";
 
 	for (var i = 0; i < numMax; i++) {
-		numAleFila = Math.floor(Math.random() * (maxFila - minFila)) + minFila;
+        if(i == 0){
+            numAleFila = Math.floor(Math.random() * (maxFilaRap - minFilaRap)) + minFilaRap;
+        }else if(i == 1){
+            numAleFila = Math.floor(Math.random() * (maxFilaGral1 - minFilaGral1)) + minFilaGral1;
+        }else if(i == 2){
+            numAleFila = Math.floor(Math.random() * (maxFilaGral2 - minFilaGral2)) + minFilaGral2;
+        } 
 		arrayFila.push(numAleFila);
 	}
 
 	for (var i = 0; i < numMax; i++) {
-		numAleServ = Math.floor(Math.random() * (maxServ - minServ)) + minServ;
+        if(arrayFila[0] > 0){
+            numAleServ = 1;
+            arrayFila[0] = arrayFila[0] - 1;
+        }else if(arrayFila[1] > 0){
+            numAleServ = 1;
+            arrayFila[1] = arrayFila[1] - 1;
+        }else if(arrayFila[2] > 0){
+            numAleServ = 1;
+            arrayFila[2] = arrayFila[2] - 1;
+        }else if(arrayFila[0] == 0){
+            numAleServ = 0;
+        }else if(arrayFila[1] == 0){
+            numAleServ = 0;
+        }else if(arrayFila[2] == 0){
+            numAleServ = 0;
+        }
 		arrayServ.push(numAleServ);
 	}
+
+    html3 = html3 + "<td>Cola</td>";
+    for (var i = 0; i < numMax; i++) {
+        html3 = html3 + "<td>";
+        html3 = html3 + arrayFila[i];
+        html3 = html3 + "</td>";
+    }
+
+    html3 = html3 + "</tr>";
+
+    html3 = html3 + "<tr>";
+    html3 = html3 + "<td>Servicio</td>";
+    for (var i = 0; i < numMax; i++) {
+        html3 = html3 + "<td>";
+        html3 = html3 + arrayServ[i];
+        html3 = html3 + "</td>";
+    }
+
+    html3 = html3 + "</tr>";
+
+    html3 = html3 + "</tbody>";
+    html3 = html3 + "</table>";
+
+   $('#inicial').html(html3);
+
 }
 
 // Variables globales 
@@ -83,12 +161,14 @@ var arrayServ = [];
 var arrayFila = [];
 var arrayServActual = [];
 var arrayNumAle = [];
+var arrayNumAle2 = [];
 
 var suceso;
 var serv;	
 
 var html;
 var html2;
+var html3;
 
 var decimales = 4;
 var nivelDeSignificancia;
@@ -101,6 +181,10 @@ var c1;
 var c2;
 
 function simulacion(){
+
+    // $('#titulo5').html("<h1>Condiciones iniciales</h1>");
+    // $('#condicion').html("<p>Número aleatorio entre 0 y 4 para el </p>");
+    // $('#condicion2').html("<p>Número aleatorio entre 0 y 1 para la fila</p>");
 
 	$('#titulo').html("<h1>Simulación</h1>");
 
@@ -145,7 +229,7 @@ function simulacion(){
     // Estado/Hasta el tiempo
     if(arrayServ[0] == 1){
     	random();
-    	serv = Math.round10((-(1/10)*60*(Math.log(1-numAle))), -4);
+    	serv = Math.round10((-(1/10)*(60*(Math.log(1-numAle)))), -4);
     	arrayServActual[0] = serv;
     	html = html + "<td>";
         html = html + serv.toFixed(decimales);
@@ -159,11 +243,11 @@ function simulacion(){
     if(arrayServ[1] == 1){
     	random();
     	if(numAle >= 0 && numAle < 0.6){
-    		serv = Math.round10(((3+5)*(numAle/0,6)), -4);
-    	}else if(numAle >= 0,6 && numAle < 0.9){
-    		serv = Math.round10(((8+5)*((numAle-0,6)/0,3)), -4);
-    	}else{
-    		serv = Math.round10(((13+5)*((numAle-0,9)/0,1)), -4);
+    		serv = Math.round10(((3+5)*(numAle/0.6)), -4);
+    	}else if(numAle >= 0.6 && numAle < 0.9){
+    		serv = Math.round10(((8+5)*((numAle-0.6)/0.3)), -4);
+    	}else if(numAle >= 0.9 && numAle <= 1){ 
+    		serv = Math.round10(((13+5)*((numAle-0.9)/0.1)), -4);
     	}
     	arrayServActual[1] = serv;
     	html = html + "<td>";
@@ -178,11 +262,11 @@ function simulacion(){
     if(arrayServ[2] == 1){
     	random();
     	if(numAle >= 0 && numAle < 0.6){
-    		serv = Math.round10(((3+5)*(numAle/0,6)), -4);
-    	}else if(numAle >= 0,6 && numAle < 0.9){
-    		serv = Math.round10(((8+5)*((numAle-0,6)/0,3)), -4);
-    	}else{
-    		serv = Math.round10(((13+5)*((numAle-0,9)/0,1)), -4);
+    		serv = Math.round10(((3+5)*(numAle/0.6)), -4);
+    	}else if(numAle >= 0.6 && numAle < 0.9){
+    		serv = Math.round10(((8+5)*((numAle-0.6)/0.3)), -4);
+    	}else if(numAle >= 0.9 && numAle <= 1){
+    		serv = Math.round10(((13+5)*((numAle-0.9)/0.1)), -4);
     	}
     	arrayServActual[2] = serv;
     	html = html + "<td>";
@@ -238,7 +322,7 @@ function simulacion(){
 
 function llegada(){
 	random();
-	tiempoLlegada = Math.round10((-(1/20)*60*(Math.log(1-numAle))), -4);
+	tiempoLlegada = Math.round10((-(1/20)*(60*(Math.log(1-numAle)))), -4);
 	tiempoInicial = Math.round10(tiempoInicial + tiempoLlegada,-4);
 }
 
@@ -305,7 +389,7 @@ function simulacion2(){
 
         random();
 		arrayFila[0] = arrayFila[0] - 1;
-		serv = Math.round10((-(1/10)*60*(Math.log(1-numAle))),-4);
+		serv = Math.round10((-(1/10)*(60*(Math.log(1-numAle)))),-4);
 		arrayServActual[0] = Math.round10(arrayServActual[0] + serv,-4);
 
 		html = html + "<td>";
@@ -371,7 +455,7 @@ function simulacion2(){
     		serv = Math.round10(((3+5)*(numAle/0.6)), -4);
     	}else if(numAle >= 0.6 && numAle < 0.9){
     		serv = Math.round10(((8+5)*((numAle-0.6)/0.3)), -4);
-    	}else{
+    	}else if(numAle >= 0.9 && numAle <= 1){
     		serv = Math.round10(((13+5)*((numAle-0.9)/0.1)), -4);
     	}
 		arrayServActual[1] = Math.round10(arrayServActual[1] + serv, -4);
@@ -441,7 +525,7 @@ function simulacion2(){
     		serv = Math.round10(((3+5)*(numAle/0.6)), -4);
     	}else if(numAle >= 0.6 && numAle < 0.9){
     		serv = Math.round10(((8+5)*((numAle-0.6)/0.3)), -4);
-    	}else{
+    	}else if(numAle >= 0.9 && numAle <= 1){
     		serv = Math.round10(((13+5)*((numAle-0.9)/0.1)), -4);
     	}
 		arrayServActual[2] = Math.round10(arrayServActual[2] + serv,-4);
@@ -701,7 +785,7 @@ function simulacion2(){
         if(arrayFila[0] > 0 && arrayServActual[0] == null){
         	random();
 			arrayFila[0] = arrayFila[0] - 1;
-			serv = Math.round10((-(1/10)*60*(Math.log(1-numAle))), -4);
+			serv = Math.round10((-(1/10)*(60*(Math.log(1-numAle)))), -4);
 			arrayServActual[0] = serv;
 
         	html = html + "<td>";
@@ -725,7 +809,7 @@ function simulacion2(){
 	    		serv = Math.round10(((3+5)*(numAle/0.6)),-4);
 	    	}else if(numAle >= 0.6 && numAle < 0.9){
 	    		serv = Math.round10(((8+5)*((numAle-0.6)/0.3)),-4);
-	    	}else{
+	    	}else if(numAle >= 0.9 && numAle <= 1){
 	    		serv = Math.round10(((13+5)*((numAle-0.9)/0.1)),-4);
 	    	}
 			arrayServActual[1] = serv;
@@ -749,7 +833,7 @@ function simulacion2(){
 	    		serv = Math.round10(((3+5)*(numAle/0.6)),-4);
 	    	}else if(numAle >= 0.6 && numAle < 0.9){
 	    		serv = Math.round10(((8+5)*((numAle-0.6)/0.3)),-4);
-	    	}else{
+	    	}else if(numAle >= 0.9 && numAle <= 1){
 	    		serv = Math.round10(((13+5)*((numAle-0.9)/0.1)),-4);
 	    	}
 			arrayServActual[2] = serv;
@@ -858,38 +942,54 @@ function prueba(){
 
 	for (var i = 0; i < arrayNumAle.length; i++) {
 		arrayPos.push(i+1);
-		html2 = html2 + "<td>";
-		html2 = html2 + arrayPos[i];
-		html2 = html2 + "</td>";
-
-		html2 = html2 + "<td>";
-		html2 = html2 + arrayNumAle[i];
-		html2 = html2 + "</td>";
-
-		html2 = html2 + "<td>";
-		html2 = html2 + arraynumAleOrd[i];
-		html2 = html2 + "</td>";
 
 		arrayDisAcum.push((arrayPos[i]/arrayNumAle.length).toFixed(decimales));
-		html2 = html2 + "<td>";
-		html2 = html2 + arrayDisAcum[i];
-		html2 = html2 + "</td>";
 
 		arrayDesAbs.push(Math.abs(arraynumAleOrd[i] - arrayDisAcum[i]).toFixed(decimales));
-		html2 = html2 + "<td>";
-		html2 = html2 + arrayDesAbs[i];
-		html2 = html2 + "</td>";
 
-		html2 = html2 + "</tr>";
 	}
-
-	html2 = html2 + "</tbody>";
-    html2 = html2 + "</table>";
 
 	max = Math.round10(Math.max.apply(null,arrayDesAbs),-4);
 
+    for (var i = 0; i < arrayNumAle.length; i++) {
+
+        html2 = html2 + "<td>";
+        html2 = html2 + arrayPos[i];
+        html2 = html2 + "</td>";
+
+        html2 = html2 + "<td>";
+        html2 = html2 + arrayNumAle2[i];
+        html2 = html2 + "</td>";
+
+        html2 = html2 + "<td>";
+        html2 = html2 + arraynumAleOrd[i];
+        html2 = html2 + "</td>";
+
+        html2 = html2 + "<td>";
+        html2 = html2 + arrayDisAcum[i];
+        html2 = html2 + "</td>";
+
+        if(max == arrayDesAbs[i]){
+            html2 = html2 + "<td bgcolor='#154fa5' style='color: #FFFFFF'>";
+            html2 = html2 + arrayDesAbs[i];
+            html2 = html2 + "</td>";
+        }else{
+            html2 = html2 + "<td>";
+            html2 = html2 + arrayDesAbs[i];
+            html2 = html2 + "</td>";
+        }
+
+        html2 = html2 + "</tr>";
+    }
+
+    html2 = html2 + "</tbody>";
+    html2 = html2 + "</table>";
+
 	$('#prueba').html(html2);
 	$('#num').html("Total de numeros aleatorios: " + arrayNumAle.length);
+
+    $('#titulo4').html("<h1>Prueba de hipótesis</h1>");
+
 	$('#est').html("Estadistico: "+ max);
 	ks();
 	return false;

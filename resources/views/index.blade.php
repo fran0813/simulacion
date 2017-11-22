@@ -11,7 +11,16 @@
     </header>
 
 	<div class="container">
+
 		<div class="col-md-12 col-sm-12 col-lg-12">
+
+			<b><div id="titulo5"></div></b>
+			<div id="condicion"></div>
+			<div id="condicion2"></div>
+
+			<center><b><div id="titulo3"></div></b></center>
+			<div id="inicial"></div>
+
 			<center><b><div id="titulo"></div></b></center>
 			<div id="simulacion"></div>
 
@@ -21,6 +30,9 @@
 
 		<div class="col-md-12 col-sm-12 col-lg-12" style="font-size: 15px;">
 			<b><p id="num"></p>
+
+			<center><b><div id="titulo4"></div></b></center>
+
 			<p id="est"></p>
 			<p id="his"></p>
 			<p id="resultado" style="color: #154fa5; font-size: 17px;"></p></b>
@@ -30,7 +42,7 @@
 			<div>
 				<div class="col-md-12 col-sm-12 col-lg-12">
 					<br />
-					<p><b>Por favor ingrese el tiempo</b></p>
+					<p><b>Por favor ingrese el tiempo en segundos</b></p>
 				</div>
 				<div class="col-md-5 col-sm-5 col-lg-5">
 					<input class="form-control"	type="text" id="tiempo" value="60">
