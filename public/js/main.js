@@ -990,7 +990,7 @@ function prueba(){
 
     $('#titulo4').html("<h1>Prueba de hipótesis</h1>");
 
-	$('#est').html("Estadistico: "+ max);
+	$('#est').html("Estadístico: "+ max);
 	ks();
 	return false;
 }
@@ -1067,7 +1067,11 @@ function ks(){
 	ks = Math.round10(ks,-4);
 	ks = ks.toFixed(decimales);
 
-	$('#his').html("Historico: " + ks);
+	$('#his').html("Histórico: " + ks);
+
+    $('#hip').html("<h1>Hipótesis nula</h1>");
+    $('#nul').html("Estadístico < Histórico");
+    $('#pru').html(max + " < " + ks);
 
 	if(max < ks){
 		$('#resultado').html("No hay evidencia suficiente para rechazar la hipótesis nula, por lo tanto los números provienen de una distribución uniforme.");

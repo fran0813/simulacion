@@ -35,6 +35,11 @@
 
 			<p id="est"></p>
 			<p id="his"></p>
+
+			<b><div id="hip"></div></b>
+			<p id="nul"></p>
+			<p id="pru"></p>
+
 			<p id="resultado" style="color: #154fa5; font-size: 17px;"></p></b>
 		</div>
 		<br /><br />
@@ -45,7 +50,7 @@
 					<p><b>Por favor ingrese el tiempo en segundos</b></p>
 				</div>
 				<div class="col-md-5 col-sm-5 col-lg-5">
-					<input class="form-control"	type="text" id="tiempo" value="60">
+					<input class="form-control"	type="number" id="tiempo" value="60">
 					<p id="error"></p>
 				</div>
 			</div>
